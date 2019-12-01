@@ -1,4 +1,4 @@
-import os
+from subprocess import call
 import argparse
 import csv
 import pandas as pd
@@ -28,7 +28,7 @@ def ohe(input_path, column_names=None, column_indices=None):
 
 if __name__ == '__main__':
 
-    os.system('make')
+    call('make', shell=True)
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--input_path', help='path to the input .csv')
@@ -37,7 +37,6 @@ if __name__ == '__main__':
     parser.add_argument('--column_indices', nargs='*', help='column indices of categorical variables',  required=False)
 
     args = parser.parse_args()
-    print(args.column_names)
     if args.column_names and args.column_indices:
         print('Warning: both categorical names and categorical indices are specified, defaulting to names')
     if args.column_names:
@@ -48,7 +47,7 @@ if __name__ == '__main__':
         df = pd.read_csv(input_path)
         df.to_csv(TEMPFILE_NAME, header=False, index=False)
 
-    os.system('./encrypt-file ' + TEMPFILE_NAME + ' ' + args.output_path)
+    call('./encrypt-file ' + TEMPFILE_NAME + ' ' + args.output_path, shell=True)
 
-    os.system('rm -f ' + TEMPFILE_NAME)
+    call('rm -f ' + TEMPFILE_NAME, shell=True)
 
