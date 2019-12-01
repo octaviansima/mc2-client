@@ -12,6 +12,9 @@ def ohe(input_path, column_names=None, column_indices=None):
     """always assumes that the input .csv has a header
     output, temp .csv never has a header"""
     df = pd.read_csv(input_path)
+    if not column_names:
+        mappings = dict(enumerate(df.columns))
+        column_names = [mappings[i] for i in column_indices]
     preprocess = make_column_transformer(
             (FunctionTransformer(lambda x: x), list(set(df.columns) - set(column_names))),
             (OneHotEncoder(), column_names))
