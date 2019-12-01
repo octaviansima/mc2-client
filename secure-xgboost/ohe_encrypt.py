@@ -48,7 +48,7 @@ if __name__ == '__main__':
         df = pd.read_csv(input_path)
         df.to_csv(TEMPFILE_NAME, header=False, index=False)
 
-    os.system('./encrypt-file ' + TEMPFILE_NAME + ' ./data/encrypted/multiple.encrypted')
+    os.system('./encrypt-file ' + TEMPFILE_NAME + ' ' + args.output_path)
 
     os.system('rm -f ' + TEMPFILE_NAME)
 
